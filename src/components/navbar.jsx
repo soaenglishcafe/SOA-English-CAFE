@@ -28,7 +28,7 @@ function Navbar() {
         <ul className="nav-right desktop-only">
           <li><Link to="/crew">Crew</Link></li>
           <li><Link to="/about">About Us</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
+          <li><Link to="/contact">Contact Us</Link></li>
         </ul>
 
         {/* HAMBURGER (MOBILE) */}
@@ -47,7 +47,7 @@ function Navbar() {
             <Link to="/founder" onClick={() => setMenuOpen(false)}>Founder</Link>
             <Link to="/crew" onClick={() => setMenuOpen(false)}>Crew</Link>
             <Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
-            <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+            <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact Us</Link>
           </div>
         )}
 
