@@ -5,7 +5,7 @@ import Footer from "./components/footer";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
 import Newsletter from "./pages/Newsletter";
-import Alum from "./pages/Alum";
+import Alum from "./pages/Founder";
 import Crew from "./pages/Crew";
 import About from "./pages/About";
 import Contact from "./pages/Contact";

@@ -59,6 +59,7 @@
 .glass-content.center {
   margin: auto;
   text-align: center;
+  max-width: 900px;
 }
 
 /* TEXT */
@@ -139,6 +140,8 @@ p {
   margin: auto;
 }
 
+
+
 /* HERO IMAGE */
 .hero-img {
   width: 100%;
@@ -154,8 +157,71 @@ p {
   object-fit: cover;
 }
 
-/* PANEL CONTACT */
+/* FOUNDERS */
+.founders-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 35px;
+}
 
+.founder-card {
+  width: 320px;
+  min-height: 430px;
+  padding: 30px 25px;
+  text-align: center;
+  color: white;
+  background: linear-gradient(
+    145deg,
+    rgba(90, 15, 15, 0.95),
+    rgba(40, 0, 0, 0.95)
+  );
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.founder-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px rgba(255, 70, 70, 0.35);
+}
+
+.founder-card h4 {
+  font-size: 1.3rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.founder-card p {
+  color: #ddd;
+  margin-bottom: 2px;
+}
+
+.founder-card span {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}
+
+/* FOUNDER IMAGE */
+.founder-img {
+  width: 65%;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto 1.8rem;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 3px solid #c0392b;
+}
+
+.founder-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PANEL CONTACT */
 
 .panel-contact {
   min-height: 100vh;

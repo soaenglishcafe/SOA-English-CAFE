@@ -1,208 +1,340 @@
 import { useState } from "react";
 import "../styles/Events.css";
-import { masterEventSheetLink } from "../utils/googleSheetsOptions";
+
+const filters = [
+  { key: "all", label: "All Events" },
+  { key: "flagged", label: "Flagged Events" },
+  { key: "internals", label: "Internals" },
+  { key: "special", label: "Special" },
+  { key: "podcasts", label: "Podcasts" },
+];
+
+const weeklySchedule = [
+  {
+    month: "01",
+    day: "01",
+    weekday: "LIVE",
+    tag: "Special",
+    title: "Softskill program",
+    description: "Enhances Communication skills and career-ready interview confidence.",
+    time: "Live",
+    category: "special",
+    location: "SOA English Café",
+    dateISO: "2026-01-01T18:00:00",
+  },
+  {
+    month: "02",
+    day: "02",
+    weekday: "REGULAR",
+    tag: "Flagged Events",
+    title: "Beyond the Degree",
+    description: "Flagship program for students seeking clarity beyond academics.",
+    time: "Every Year",
+    category: "flagged",
+    location: "SOA English Café",
+    dateISO: "2026-02-02T18:00:00",
+  },
+  {
+    month: "03",
+    day: "03",
+    weekday: "URGENT",
+    tag: "Internal",
+    title: "Urgent Call",
+    description: "An internal priority event for focused participation and team readiness.",
+    time: "Internal",
+    category: "internals",
+    location: "Internal",
+    dateISO: "2026-03-03T18:00:00",
+  },
+  {
+    month: "04",
+    day: "04",
+    weekday: "FLAGGED",
+    tag: "Flagged Events",
+    title: "Event 4",
+    description: "Flagged events, internals, and special initiatives for active engagement.",
+    time: "TBA",
+    category: "flagged internals special",
+    location: "SOA English Café",
+    dateISO: "2026-04-04T18:00:00",
+  },
+  {
+    month: "05",
+    day: "05",
+    weekday: "FLAGGED",
+    tag: "Flagged Events",
+    title: "Event 5",
+    description: "Community-led learning, networking, and confidence-building opportunities.",
+    time: "TBA",
+    category: "flagged internals special",
+    location: "SOA English Café",
+    dateISO: "2026-05-05T18:00:00",
+  },
+  {
+    month: "06",
+    day: "06",
+    weekday: "FLAGGED",
+    tag: "Flagged Events",
+    title: "Event 6",
+    description: "A high-impact event designed to create visible growth and confidence.",
+    time: "TBA",
+    category: "flagged internals special",
+    location: "SOA English Café",
+    dateISO: "2026-06-06T18:00:00",
+  },
+  {
+    month: "07",
+    day: "07",
+    weekday: "FLAGGED",
+    tag: "Flagged Events",
+    title: "Event 7",
+    description: "Flagged events, internals, and special initiatives for active engagement.",
+    time: "TBA",
+    category: "flagged internals special",
+    location: "SOA English Café",
+    dateISO: "2026-07-07T18:00:00",
+  },
+  {
+    month: "08",
+    day: "08",
+    weekday: "FLAGGED",
+    tag: "Flagged Events",
+    title: "Event 8",
+    description: "A collaborative event focused on leadership, expression, and clarity.",
+    time: "TBA",
+    category: "flagged internals special",
+    location: "SOA English Café",
+    dateISO: "2026-08-08T18:00:00",
+  },
+  {
+    month: "09",
+    day: "09",
+    weekday: "FLAGGED",
+    tag: "Flagged Events",
+    title: "Event 9",
+    description: "Opportunities to sharpen communication and strengthen public confidence.",
+    time: "TBA",
+    category: "flagged internals special",
+    location: "SOA English Café",
+    dateISO: "2026-09-09T18:00:00",
+  },
+  {
+    month: "10",
+    day: "10",
+    weekday: "FLAGGED",
+    tag: "Flagged Events",
+    title: "Event 10",
+    description: "Connection-focused event built to transform hesitation into confident action.",
+    time: "TBA",
+    category: "flagged internals special",
+    location: "SOA English Café",
+    dateISO: "2026-10-10T18:00:00",
+  },
+  {
+    month: "11",
+    day: "11",
+    weekday: "PODCAST",
+    tag: "Podcast",
+    title: "Event 11",
+    description: "A podcast-based discussion around growth, learning, and communication.",
+    time: "Podcast",
+    category: "podcasts",
+    location: "SOA English Café",
+    dateISO: "2026-11-11T18:00:00",
+  },
+  {
+    month: "12",
+    day: "12",
+    weekday: "PODCAST",
+    tag: "Podcast",
+    title: "Event 12",
+    description: "A short, relevant discussion on confidence, communication, and career confidence.",
+    time: "Podcast",
+    category: "podcasts",
+    location: "SOA English Café",
+    dateISO: "2026-12-12T18:00:00",
+  },
+  {
+    month: "13",
+    day: "13",
+    weekday: "PODCAST",
+    tag: "Podcast",
+    title: "Event 13",
+    description: "A podcast session focused on leadership, listening, and personal growth.",
+    time: "Podcast",
+    category: "podcasts",
+    location: "SOA English Café",
+    dateISO: "2026-01-13T18:00:00",
+  },
+  {
+    month: "14",
+    day: "14",
+    weekday: "PODCAST",
+    tag: "Podcast",
+    title: "Event 14",
+    description: "New ideas, practical lessons, and a stronger mindset for real-world success.",
+    time: "Podcast",
+    category: "podcasts",
+    location: "SOA English Café",
+    dateISO: "2026-01-14T18:00:00",
+  },
+  {
+    month: "15",
+    day: "15",
+    weekday: "PODCAST",
+    tag: "Podcast",
+    title: "Event 15",
+    description: "A quick, engaging podcast format for learning, reflection, and growth.",
+    time: "Podcast",
+    category: "podcasts",
+    location: "SOA English Café",
+    dateISO: "2026-01-15T18:00:00",
+  },
+  {
+    month: "16",
+    day: "16",
+    weekday: "PODCAST",
+    tag: "Podcast",
+    title: "Event 16",
+    description: "A recurring podcast segment built for practical communication and confidence.",
+    time: "Podcast",
+    category: "podcasts",
+    location: "SOA English Café",
+    dateISO: "2026-01-16T18:00:00",
+  },
+];
 
 function Events() {
-    const [events] = useState([
-        {
-            _id: 1,
-            title: "English Speaking Workshop",
-            date: "2026-03-20T10:00:00Z",
-            image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop",
-            description: "Join us for an interactive session on improving your English speaking skills.",
-            isPaid: false,
-        },
-        {
-            _id: 2,
-            title: "Grammar Masterclass",
-            date: "2026-03-25T14:00:00Z",
-            image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1973&auto=format&fit=crop",
-            description: "A deep dive into advanced English grammar rules and usage.",
-            isPaid: false,
-        },
-        {
-            _id: 3,
-            title: "Literature Discussion Club",
-            date: "2026-04-05T18:00:00Z",
-            image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=2098&auto=format&fit=crop",
-            description: "Discussing contemporary English literature with fellow readers.",
-            isPaid: true,
-            price: "$10",
-        },
-        {
-            _id: 4,
-            title: "Vocabulary Building Session",
-            date: "2026-02-15T16:00:00Z",
-            image: "https://images.unsplash.com/photo-1555448248-2571daf6344b?q=80&w=1974&auto=format&fit=crop",
-            description: "Expand your vocabulary with fun and engaging activities.",
-            isPaid: true,
-            price: "$5",
-        },
-        {
-            _id: 5,
-            title: "Pronunciation Workshop",
-            date: "2026-04-10T11:00:00Z",
-            image: "https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=2070&auto=format&fit=crop",
-            description: "Learn how to pronounce English words like a native speaker.",
-            isPaid: true,
-            price: "$15",
-        },
-        {
-            _id: 6,
-            title: "Storytelling Night",
-            date: "2026-04-15T19:00:00Z",
-            image: "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?q=80&w=2070&auto=format&fit=crop",
-            description: "Share your stories and listen to others in a cozy environment.",
-            isPaid: true,
-            price: "$8",
-        }
-    ]);
-    const [selectedEvent, setSelectedEvent] = useState(null);
+  const [activeFilter, setActiveFilter] = useState("all");
 
-    // Form State
-    const [formData, setFormData] = useState({ name: "", email: "", transactionId: "" });
-    const [formStatus, setFormStatus] = useState("");
+  const visibleSchedule =
+    activeFilter === "all"
+      ? weeklySchedule
+      : weeklySchedule.filter((item) => item.category.includes(activeFilter));
 
-    const handleInputChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  const addToCalendar = (title, startISO, location) => {
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&location=${encodeURIComponent(location)}&details=${encodeURIComponent("Programação da Agenda Semanal MEVAM Ministério")}`;
+    window.open(googleCalendarUrl, "_blank");
+  };
 
-    const handleEventSelect = (event) => {
-        setSelectedEvent(event);
-        setFormData({ name: "", email: "", transactionId: "" }); // Reset form
-        setFormStatus("");
-    };
+  return (
+    <section className="events-page">
+      <div className="events-page__ambient events-page__ambient--radial" aria-hidden="true" />
+      <div className="events-page__ambient events-page__ambient--accent" aria-hidden="true" />
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+      <div className="events-page__hero">
+        <div className="events-page__hero-card">
+          <div className="events-page__hero-badge">
+            <span className="events-page__dot" />
+            ONGOING EVENT
+          </div>
+          <h1>SOFT SKILL PROGRAM 2026</h1>
+          <div className="events-page__hero-copy">
+            <p>
+              Don't let the nervousness and lack of confidence ruin the hardships you have put to get
+              selected in your dream job in the final round of interview.
+            </p>
+            <p className="events-page__hero-subtitle">How will SOFT SKILLS PROGRAM be Beneficial for you?</p>
+            <ul>
+              <li>Enhances Communication skills.</li>
+              <li>Learn about Group Discussions(GDs), Interview preparations and Presentations.</li>
+              <li>Expand your Network by showcasing Leadership skills during teamwork.</li>
+            </ul>
+            <p className="events-page__hero-subtitle">REWARDS:-</p>
+            <ul>
+              <li>Participation Certificates upon program completion.</li>
+              <li>Special Rewards for the top students.</li>
+            </ul>
+            <p>
+              So, don't let this opportunity go by thinking you have much time. Turn your weakness into
+              the biggest strength so that you'll not regret it when time slips!
+            </p>
+          </div>
+        </div>
 
-        if (!selectedEvent) return;
+        <div className="events-page__next-event">
+          <div className="events-page__next-event-date">
+            <span>LIVE</span>
+            <strong>NOW</strong>
+          </div>
+          <div className="events-page__next-event-copy">
+            <span>Softskill program</span>
+            <p>Interview Confidence &amp; Growth</p>
+            <small>
+              <i className="fa-regular fa-clock" /> Ongoing • SOA English Café
+            </small>
+          </div>
+        </div>
+      </div>
 
-        if (!masterEventSheetLink || masterEventSheetLink.includes("PASTE_WEB_APP_URL")) {
-            setFormStatus("Error: Google Sheet Link Not Configured.");
-            return;
-        }
+      <div className="events-page__schedule-shell" id="agenda">
+        <aside className="events-page__watermark" aria-hidden="true">
+          SOA ENGLISH CAFÉ
+        </aside>
 
-        setFormStatus("Submitting...");
-
-        try {
-            // Append the event context to the form payload
-            const payload = {
-                ...formData,
-                eventTitle: selectedEvent.title
-            };
-
-            await fetch(masterEventSheetLink, {
-                method: "POST",
-                // Avoid CORS issues with Google Apps Script Web Apps by sending no-cors
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload),
-            });
-
-            // Since mode is 'no-cors', response.ok will be false. 
-            // Assuming success if it doesn't throw a network error.
-            setFormStatus("Registration Successful!");
-            setFormData({ name: "", email: "", transactionId: "" });
-        } catch (error) {
-            console.error("Submission Error:", error);
-            setFormStatus("Error submitting registration. Please try again.");
-        }
-    };
-
-    return (
-        <section className="events-page">
-            {/* LEFT: Events Grid */}
-            <div className="events-grid">
-                {events.slice(0, 6).map(event => {
-                    const isPast = new Date(event.date) < new Date();
-
-                    return (
-                        <div
-                            key={event._id}
-                            className={`event-card ${isPast ? "past" : ""} ${selectedEvent?._id === event._id ? "selected" : ""}`}
-                            onClick={() => !isPast && handleEventSelect(event)}
-                        >
-                            <img src={event.image} alt={event.title} />
-                            <div className="event-info">
-                                <h3>{event.title}</h3>
-                                <p>{new Date(event.date).toLocaleDateString()}</p>
-                                <span className="event-badge">{event.isPaid ? event.price : "Free"}</span>
-                            </div>
-                        </div>
-                    );
-                })}
+        <div className="events-page__schedule-panel">
+          <div className="events-page__filters" data-purpose="schedule-filters">
+            <div className="events-page__filter-list" id="filter-buttons">
+              {filters.map((filter) => (
+                <button
+                  key={filter.key}
+                  type="button"
+                  className={
+                    activeFilter === filter.key
+                      ? "events-page__filter events-page__filter--active"
+                      : "events-page__filter"
+                  }
+                  onClick={() => setActiveFilter(filter.key)}
+                  data-filter={filter.key}
+                >
+                  {filter.label}
+                </button>
+              ))}
             </div>
 
-            {/* RIGHT: Registration Panel */}
-            <div className="registration-panel">
-                {selectedEvent ? (
-                    <>
-                        <h2>{selectedEvent.title}</h2>
-                        <p className="event-date">{new Date(selectedEvent.date).toLocaleString()}</p>
-                        <p className="event-desc">{selectedEvent.description}</p>
+          </div>
 
-                        {selectedEvent.isPaid && (
-                            <div className="payment-info">
-                                <h3>Registration Fee: {selectedEvent.price}</h3>
-                                <p>Scan to Pay:</p>
-                                <img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg"
-                                    alt="QR Code"
-                                    className="qr-code"
-                                />
-                            </div>
-                        )}
-
-                        <form onSubmit={handleSubmit}>
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="Your Name"
-                                value={formData.name}
-                                onChange={handleInputChange}
-                                required
-                            />
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                required
-                            />
-                            {selectedEvent.isPaid && (
-                                <input
-                                    type="text"
-                                    name="transactionId"
-                                    placeholder="Transaction ID (After Payment)"
-                                    value={formData.transactionId}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            )}
-                            <button type="submit" disabled={formStatus === "Submitting..."}>
-                                {formStatus === "Submitting..." ? "Submitting..." : "Complete Registration"}
-                            </button>
-                        </form>
-
-                        {formStatus && (
-                            <p style={{ marginTop: '10px', color: formStatus.includes('Error') ? '#ff4d4f' : '#52c41a', fontWeight: 'bold', textAlign: 'center' }}>
-                                {formStatus}
-                            </p>
-                        )}
-                    </>
-                ) : (
-                    <div className="empty-registration">
-                        <h2>Registration</h2>
-                        <p>Select an upcoming event from the left to view details and register.</p>
+          <div className="events-page__items" id="agenda-items-container">
+            {visibleSchedule.map((entry) => (
+              <article
+                key={`${entry.month}-${entry.day}`}
+                className="events-page__item"
+                data-category={entry.category}
+              >
+                <div className="events-page__date-block">
+                  <div className="events-page__date-box">
+                    <span>{entry.month}</span>
+                    <strong>{entry.day}</strong>
+                  </div>
+                  <div className="events-page__date-divider" aria-hidden="true" />
+                  <div className="events-page__details">
+                    <div className="events-page__heading-row">
+                      <span className="events-page__weekday">{entry.weekday}</span>
+                      <span className="events-page__tag">{entry.tag}</span>
                     </div>
-                )}
-            </div>
-        </section>
-    );
+                    <h2>{entry.title}</h2>
+                    <p>{entry.description}</p>
+                  </div>
+                </div>
+
+                <div className="events-page__meta">
+                  <div className="events-page__time-pill">
+                    <i className="fa-regular fa-clock" />
+                    <span>{entry.time}</span>
+                  </div>
+                 
+                </div>
+              </article>
+            ))}
+          </div>
+
+         
+        </div>
+      </div>
+
+   
+    </section>
+  );
 }
 
 export default Events;
