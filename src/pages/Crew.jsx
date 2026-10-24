@@ -59,13 +59,13 @@ const secretariat = [
 
 const techTeam = [
   { name: "Pranjal Choudhury", role: "Frontend Developer", img: pranjalImg, quote: `As you sow, so shall you reap.` },
-  { name: "Sriya Sahoo", role: "Backend Developer", img: sriyaImg, quote: `Remember, you're the one who can fill the world with sunshine` },
   { name: "Shubham Kumar", role: "Frontend Developer", img: shubhamImg, quote: `The things we do, do things to us.` },
   {name:"Ayush Sharma",role: "Ex-Contributor", img: ayushshImg , quote:`Special thanks from the SEC Tech Team to our former member`},
 ];
 
 const contentTeam = [
   { name: "Dibyashree Sahoo", role: "Content Team Member", img: dibyashreeImg, quote: `Soft chaos` },
+  { name: "Sriya Sahoo", role: "Content Team Member", img: sriyaImg, quote: `Remember, you're the one who can fill the world with sunshine` },
   { name: "Aishee Mukhopadhyay", role: "Content Team Member", img: aisheeImg, quote: `Look like an innocent flower, but be the serpent under it. — William Shakespeare` },
   { name: "Anshika Anand", role: "Content Team Member", img: anshikaImg, quote: `Strive not to be a success but rather to be of value.` },
   { name: "Aratrika Chaudhury", role: "Content Team Member", img: aratrikaImg, quote: `Stars shine the brightest on the darkest nights.` },
